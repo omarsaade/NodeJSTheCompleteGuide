@@ -304,9 +304,64 @@ const m = fs.readdir("./", (err, files) => {
 
 Event nodejs
 
+//    class
+const { AsyncLocalStorage } = require("async_hooks");
+const EventEmitter = require("events");
+// instance or object
+const emitter = new EventEmitter();
+//emit : produce something  / Making a noise
+
+//Register a listener
+// on bta3mul addListener
+emitter.on("messageLogged", () => {
+  console.log("Listener called");
+});
+
+//Raising an event here.
+emitter.emit("messageLogged");
+
+--------------------------------------------------------
+
+//    class
+const EventEmitter = require("events");
+// instance or object
+const emitter = new EventEmitter();
+//emit : produce something  / Making a noise
+
+//Register a listener
+// on bta3mul addListener
+emitter.on("messageLogged", (arg) => {
+  // e, eventArg
+  console.log("Listener called", arg);
+});
+
+//with this technique..we have pass data about the event that just happened
+//Raising an event here.            event argument
+emitter.emit("messageLogged", { id: 1, url: "http://" });
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+==============================================================
+
+
+Events Arguments
+
+when we wanna rasise an event..we also wanna send some data
+about that event.
+
+ 
 
 
 
