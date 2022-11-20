@@ -1,0 +1,312 @@
+
+node js is runtime environment for executing javascsript code outside of a browser
+it is not a framework or a language. and u cant compare it tp asp.net 
+or other ...
+
+node works on v8 , but this v8 is rebuildet on c++
+
+
+--------------------------------------
+Node Installation
+
+open comd
+
+check if u have node on your machine
+node -v
+
+if u dont have node..open nodejs.org and download the
+version that recommended for most users
+for example
+ 8.9.1 LTS
+
+mkdir first-app
+cd first-app
+code .
+
+in vscode
+add App.js
+
+to run the node js file
+go to the project folder and run node app1.js
+and everything will work.
+
+Node is a C++ program it includes chrome v8 javascsript engine
+
+---------------------------------------------
+Mosh Hamedani
+Part 2
+  Node Module System
+  os : operating System
+  fs: file System
+  events
+  http
+----------------------------------------------------------------
+
+
+in node js every file is a Module
+and every function or variable inside this
+Module is scopped for this Module
+
+
+/*
+     to run this file   
+     open project folder and run
+     node app1.js
+*/
+
+// function sayHello(name) {
+//   console.log("Hello " + name);
+// }
+
+console.log(module);
+
+/*
+
+window object
+
+console.log();  window object
+setTimeout() ;  window object
+setInterval();...........
+ClearInterval();......
+
+in window ?
+we can use window.console.log() or call it directly console.log()
+//same for window.setTimeout
+
+var message = '';
+window.message
+
+so In NOde we dont have this window object..we have something called
+"global"
+
+so we can access those objects using global keyword
+ex:  global.console.log()
+global.setTimeout
+
+
+
+
+sayHello("omar");
+console.log(window); this will give us an error because in node we
+dont have a window or a document object..we use other keywords like
+http system , file system....
+*/
+
+
+===================================================
+
+
+ Scanning our javascsript code by using
+
+           jshint app1.js
+
+we can see the difference           
+
+=======================================================
+
+
+we can also export a single function instead of exporting an object.
+how can we do that ?
+ so for example here we dont an object in this module
+ cz we have a single method
+an Object would be usefull if we have multiple methods or properties
+
+
+
+
+                   without using object
+
+    logger.js
+
+ var url = "http://mylogger.io/log";
+
+function log(message) {
+
+  console.log(message);
+}   
+module.exports = log;
+console.log(module);               
+
+
+
+
+            app.js
+
+  const logger = require("./logger");
+
+logger("message");          
+
+
+----------------------------
+
+                          using object
+
+
+logger.js
+
+var url = "http://mylogger.io/log";
+
+function log(message) {
+  // send an HTTP request
+  console.log(message);
+}
+
+ module.exports.log = log;
+
+------------------------------------
+app1.js
+
+const logger = require("./logger");
+logger.log("message");
+
+
+--------------------------------------------------
+
+
+
+         Module Wrapper Function
+
+(function (exports, require , module, __filename, __dirname){
+
+             our node js code
+
+}
+
+he deyman byehthawa fia kell nodejs file men wara el kawalis
+
+
+----------------------------------------------------------------------------------
+
+
+
+
+Fina nekteba hik lal module.exports
+
+
+app.js
+--------
+const logger = require("./logger");
+logger.log("message");
+
+
+
+logger.js
+---------
+var url = "http://mylogger.io/log";
+
+function log(message) {
+  console.log(message);
+}
+
+exports.log = log;
+
+
+
+============================================================================
+
+3 methods to exports function
+
+ module.exports = log;
+
+module.exports.log = log;
+
+exports.log = log;
+
+
+the import syntax will be affected and changed depending on the export syntax;
+
+
+==============================================================
+
+exports         hye reference la          module.exports
+
+
+ module.exports = log;
+
+or
+    
+ module.exports.log = log;
+ 
+ ===================================================
+
+               Path Module
+
+bel nesbe lal parameter taba3 require
+el node js byeje w bishuf jaweta
+iza ken shi men el built in module
+bya3melo import iza la2 ..bisir bye5do ka
+path...w bisir ybarem 3le bel file
+
+//built in module
+const path = require("path");
+
+var pathObj = path.parse(__filename);
+
+console.log(pathObj);
+{
+  root: 'C:\\',
+  dir: 'C:\\Users\\10User\\Documents\\Online-shop',
+  base: 'app2.js',
+  ext: '.js',
+  name: 'app2'
+}
+
+
+
+
+app.js
+
+
+console.log(__filename);
+console.log(__dirname);
+var url = "http://mylogger.io/log";
+
+function log(message) {
+  console.log(message);
+}
+
+module.exports = log;
+
+
+
+
+-------------------------------------
+
+                    OS Module
+const os = require("os");
+
+var totalMemory = os.totalmem();
+var freeMemory = os.freemem();
+
+console.log("Total Memory " + totalMemory);
+console.log("free Memory " + freeMemory);
+
+
+====================================================
+
+file system module
+always prefer to use async method
+
+
+const fs = require("fs");
+ const files = fs.readdirSync("./");
+ console.log(files);
+// [ '.git', 'app.js', 'logger.js', 'node.txt' ]
+
+//kell el async take a callback function
+const m = fs.readdir("./", (err, files) => {
+  if (err) console.log("Error", err);
+  else console.log("Result", files);
+});
+
+
+---------------------------------------------
+
+Event nodejs
+
+
+
+
+
+
+
