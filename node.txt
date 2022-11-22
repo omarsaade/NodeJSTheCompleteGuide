@@ -460,6 +460,63 @@ const server = http.createServer((req, res) => {
 server.listen(3000);
 
 console.log("Listening on port 3000...");
+------------------------------------------------------------
+
+
+const http = require("http");
+//we can create a web server
+//this server is an event emitter // create server
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.write("Hello world");
+    res.end();
+  }
+  if (req.url === "/api/courses") {
+    res.write(JSON.stringify([1, 2, 3]));
+    res.end();
+  }
+});
+
+//handler
+// server.on("connection", (socket) => {
+//   console.log("New Connection...");
+// });
+
+/*
+raising event
+This function is asynchronous. When the server starts listening,
+ the 'listening' event will be emitted. The last parameter 
+ callbackwill
+ be added as a listener for the 'listening' event.
+ */
+
+server.listen(3000);
+
+console.log("Listening on port 3000...");
+
+
+
+
+--------------------------------------------------
+
+
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.write("Hello world");
+    res.end();
+  }
+  if (req.url === "/api/courses") {
+    res.write(JSON.stringify([1, 2, 3]));
+    res.end();
+  }
+});
+
+server.listen(3000);
+
+console.log("Listening on port 3000...");
+---------------------------
 
 
 
@@ -469,7 +526,511 @@ li hye simpler w arjallllllllllllllllllllll
 
 ==================================================
 
+  
+
+
+
+
+
+ Section 3
+
+ NPM
+
+before u need to add a package to ur app u need to create
+a file named package.json
+
+package.json : is a json file that includes some basic info about ur app
+or project
+name,version, depende.....
+
+-to create a package.json file we run 
+                  npm init
+
+and it will ask u a bunch of question
+version
+description
+entry point
+....
+....
+
+
+
+to open a package.json file in terminal
+
+   write cat package.json
+
+--------------------------------
+
+or there is a faster way to create a package.json file
+
+npm init --yes
+
+
+==========================================
+
+npm install underscore
+
+ or
  
+npm i underscore
+
+=============================================
+
+
+
+how the require function works ?
+bthuf iza hye bel core module..iza la2 betbarem 3laya bel file
+aw folder..iza la22 btshuf iza hye bel node node_modules
+
+
+// var _ = require("./underscore"); //underscore.js or underscore/index.js
+//1- Core module
+//  or
+//2- File or folder
+// or
+//3- node_modules Folder
+
+var _ = require("underscore");
+var result = _.contains([1, 2, 3], 2);
+console.log(result);
+----------------------------------------------------
+
+nehna bas nerfa3 el repo 3a git el node_modules folder
+ma bya3mul upload ma3on akid... bas byenzal bel dependecies
+ano enta kezem tnazlon.............
+w aslan el node_modules bikun wazna do5em ktir yaane 200mb aw 300
+fa ma byenfa3 terfa3a 3a github aw ano teb3ata la hada copy
+aw 3a email...
+kif ?
+
+
+
+
+
+
+
+byekfe ta3mul npm install aw npm i
+w kelshi byemshe halo
+
+
+
+
+-----------------------------------------------------
+
+
+      ib3ad : ignore
+
+Exclude the node modules folder using git
+
+setp1:
+
+git init
+git status
+
+step2:
+ 
+ create a file in the root named
+   .gitignore
+
+ list all the file and folder that should be excluded
+from our git repositry  
+
+yaane mnshuf shu badna folder aw file men el maktubin bi 
+el status w mnektob li badna yeh menon
+
+ex:  /node_modules
+mnekteba 3ade bel .gitignore
+
+w men baada 
+git add * 
+git m "..."
+git push
+
+
+====================================================
+
+
+video 30
+semantic versioning   SemVer
+            Caret
+we have 3 numbers or 3 components
+
+"mongoose": "^6.7.2", //Major.Minor.Patch
+
+patch: fix bug aw tas7i7
+Minor: adding new features that dont break the existing api
+Major 5.0.0
+                         
+                         ^4.13.6
+
+patch :we increase the patch verison when we fix a bug  + 1
+       4.13.7
+
+
+
+
+Minor: adding new features that dont break the existing api
+4.14.0
+li2an baad mafi bug...unstable
+
+
+
+Major: adding new features that break the existing api
+5.0.0
+
+
+^ carat : yaane aya version btebda bi 4
+aw fina nekteba bal el carar character bi hayda el shakel
+4.x
+
+
+~ Tilde      ~4.13.6
+aya wahde awala 4.13
+aw tari2a tenye la kitebta hye 4.13.x
+
+
+
+
+iza habayna nhet the exact same version
+mnhet el semantic verison metel ma huwe
+bel zabet bidun carat aw tilde.
+
+                  semantic versioning
+--------------------------------------------------------
+
+to see all the install dependecies and the exact verison
+
+
+            npm list
+
+
+or
+
+
+            npm list --depth=0
+
+
+-------------------------------------------------------
+
+
+                 Viewing Registry  
+                  
+faster way to finds all the meta data to that library
+
+npm view mongoose                
+
+
+
+
+dependencies:
+  npm view mongoose dependencies
+
+
+verisons:
+  npm view mongoose versions
+
+
+====================================================
+
+
+
+
+
+
+installing a specific version of package
+
+npm i mongoose@2.4.2
+
+-------------------------------------------------
+
+example:
+
+underscore 1.4.0
+ npm i underscore@1.4.0
+
+
+
+npm list
+=========================================
+
+
+v34    updating Local Packages
+
+
+lasthuf el current version wel wanted wel latest.
+AW BEL A7RA IZA EL VERISON mesh updated
+bi raje3lak shi,,ger hik ymkn ma yerja3lak shi.
+
+npm outdated
+
+
+
+to update the version we run
+
+npm update
+this only works for update minor and patch releases.
+
+
+
+if u want to update to this exact lastest version
+
+
+
+             npm i -g npm-check-updates
+
+
+or
+
+           
+npm-check-updates
+
+or
+
+               ncu
+
+
+               or
+
+
+               ncu -u
+
+
+after that we run npm install the dependency
+
+npm i
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+
+video 35
+
+                    DevDependencies
+
+
+to specify that is a developement dependency
+and should not go into productional environment
+bas badna yeh during development.
+
+static analysis:
+
+npm i jshint --save-dev
+
+he btshuf el syntactical error
+
+
+-----------------------------------------------------------
+
+
+
+video 36
+
+
+                      uninstall package
+
+how ?
+  
+
+npm uninstall mongoose
+       
+
+       or
+
+npm un mongoose
+
+
+
+
+-----------------------------------------------------
+
+
+video 37
+
+working with  global Packages
+
+
+to upgrade to the latest version
+            npm i -g npm
+
+
+
+            npm -g outdated
+
+
+ npm un -g mongoose
+
+==============================================================================
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+
+
+v 38
+
+  Publishing a Package
+
+create ur own node package and publish them in the website
+
+
+create a folder 
+
+mkdir lion-lib
+cd lion-lib/
+npm init --yes
+code .
+add index.js file
+
+-----
+         index.js
+
+module.exports.add = (a, b) => {
+  return a + b;
+};
+
+-------
+
+
+
+back to terminal
+
+create an account on npm.com
+
+
+//     if u dont have an account
+
+npm adduser
+
+//if u have an account you can run 
+  npm login
+
+
+  finally
+
+           npm publish
+
+
+
+
+
+
+
+
+
+
+ now how to run ??
+
+
+ create a new folder 
+ fut 3le
+ npm init --yes
+
+npm i omarsaadepack  
+
+create app.js file jawa el folder el root
+yaane 7ad el node_modules w het jaweto
+
+
+
+app.js
+
+var lion = require("omarsaadepack");
+var result = lion.add(1, 2);
+console.log(result);
+
+
+
+w lah tshuf el result.
+3
+
+
+======================================================
+
+Updating a Published Package
+
+
+bel index.js
+ sar fi update w hala2 badna na3melo update
+
+
+ index.js
+
+ //entry point to our package
+module.exports.add = (a, b) => {
+  return a + b;
+};
+
+module.exports.multiply = (a, b) => {
+  return a * b;
+};
+
+
+
+
+
+
+hala2 nehna ma gayran bel aseyse..
+yaane mena major feature
+wala zabatna bug..yaane mena bug fix
+bas mena feature asesye wala 3adalna 3al asesye
+li betgayer el api
+dallet el function el awle bel dabet metel ma hye abel.
+
+hala2 kif bi sir el update?
+
+ya manually by hand lal package.json aw
+
+using npm
+
+npm version major
+or
+npm version minor
+or
+npm version patch
+
+nehna 3am na3mul lal minor
+
+
+             npm version minor
+
+
+and 
+
+   npm publish
+
+==========================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
