@@ -1,5 +1,6 @@
 const EventEmitter = require("events");
 
+//Extending Event Emitter
 class Logger extends EventEmitter {
   log(message) {
     // Send a HTTP request
@@ -11,4 +12,3 @@ class Logger extends EventEmitter {
 }
 
 module.exports = Logger;
-//

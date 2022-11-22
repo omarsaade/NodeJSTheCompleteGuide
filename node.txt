@@ -343,13 +343,7 @@ emitter.on("messageLogged", (arg) => {
 emitter.emit("messageLogged", { id: 1, url: "http://" });
 
 
-
-
-
-
-
-
-
+---------------------------------------------------
 
 
 
@@ -363,6 +357,117 @@ Events Arguments
 
 when we wanna rasise an event..we also wanna send some data
 about that event.
+
+
+
+event  Emitter
+
+
+
+logger.js
+
+
+const EventEmitter = require("events");
+
+//Extending Event Emitter
+class Logger extends EventEmitter {
+  log(message) {
+    // Send a HTTP request
+    console.log(message);
+
+    // Raise an event
+    this.emit("messageLogged", { id: 1, url: "http://" });
+  }
+}
+
+module.exports = Logger;
+//
+
+
+
+
+app.js
+
+
+
+
+const Logger = require("./logger");
+const logger = new Logger();
+
+logger.on("messageLogged", (arg) => {
+  console.log("Listener called", arg);
+});
+
+logger.log("message");
+
+
+
+===================================================================
+
+                         HTTP Module
+
+
+
+
+
+
+                   addiman jeddan
+
+const http = require("http");
+//for this we can create a web server
+//this server is an event emitter
+const server = http.createServer();
+
+//handler
+server.on("connection", (socket) => {
+  console.log("New Connection...");
+});
+
+//listening
+server.listen(3000);
+
+console.log("Listening on port 3000...");
+
+
+                     
+
+
+                     el afdalllllllllllll
+         high LEVELLLLLLLLLLLLLLLLL
+
+
+
+const http = require("http");
+//for this we can create a web server
+//this server is an event emitter
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.write("Hello world");
+    res.end();
+  }
+  if (req.url === "/api/courses") {
+    res.write(JSON.stringify([1, 2, 3]));
+    res.end();
+  }
+});
+
+//handler
+// server.on("connection", (socket) => {
+//   console.log("New Connection...");
+// });
+
+//listening
+server.listen(3000);
+
+console.log("Listening on port 3000...");
+
+
+
+lessa fi tari2et el express
+li hye simpler w arjallllllllllllllllllllll
+
+
+==================================================
 
  
 
