@@ -1,0 +1,1035 @@
+
+node js is runtime environment for executing javascsript code outside of a browser
+it is not a framework or a language. and u cant compare it tp asp.net 
+or other ...
+
+node works on v8 , but this v8 is rebuildet on c++
+
+
+--------------------------------------
+Node Installation
+
+open comd
+
+check if u have node on your machine
+node -v
+
+if u dont have node..open nodejs.org and download the
+version that recommended for most users
+for example
+ 8.9.1 LTS
+
+mkdir first-app
+cd first-app
+code .
+
+in vscode
+add App.js
+
+to run the node js file
+go to the project folder and run node app1.js
+and everything will work.
+
+Node is a C++ program it includes chrome v8 javascsript engine
+
+---------------------------------------------
+Mosh Hamedani
+Part 2
+  Node Module System
+  os : operating System
+  fs: file System
+  events
+  http
+----------------------------------------------------------------
+
+
+in node js every file is a Module
+and every function or variable inside this
+Module is scopped for this Module
+
+
+/*
+     to run this file   
+     open project folder and run
+     node app1.js
+*/
+
+// function sayHello(name) {
+//   console.log("Hello " + name);
+// }
+
+console.log(module);
+
+/*
+
+window object
+
+console.log();  window object
+setTimeout() ;  window object
+setInterval();...........
+ClearInterval();......
+
+in window ?
+we can use window.console.log() or call it directly console.log()
+//same for window.setTimeout
+
+var message = '';
+window.message
+
+so In NOde we dont have this window object..we have something called
+"global"
+
+so we can access those objects using global keyword
+ex:  global.console.log()
+global.setTimeout
+
+
+
+
+sayHello("omar");
+console.log(window); this will give us an error because in node we
+dont have a window or a document object..we use other keywords like
+http system , file system....
+*/
+
+
+===================================================
+
+
+ Scanning our javascsript code by using
+
+           jshint app1.js
+
+we can see the difference           
+
+=======================================================
+
+
+we can also export a single function instead of exporting an object.
+how can we do that ?
+ so for example here we dont an object in this module
+ cz we have a single method
+an Object would be usefull if we have multiple methods or properties
+
+
+
+
+                   without using object
+
+    logger.js
+
+ var url = "http://mylogger.io/log";
+
+function log(message) {
+
+  console.log(message);
+}   
+module.exports = log;
+console.log(module);               
+
+
+
+
+            app.js
+
+  const logger = require("./logger");
+
+logger("message");          
+
+
+----------------------------
+
+                          using object
+
+
+logger.js
+
+var url = "http://mylogger.io/log";
+
+function log(message) {
+  // send an HTTP request
+  console.log(message);
+}
+
+ module.exports.log = log;
+
+------------------------------------
+app1.js
+
+const logger = require("./logger");
+logger.log("message");
+
+
+--------------------------------------------------
+
+
+
+         Module Wrapper Function
+
+(function (exports, require , module, __filename, __dirname){
+
+             our node js code
+
+}
+
+he deyman byehthawa fia kell nodejs file men wara el kawalis
+
+
+----------------------------------------------------------------------------------
+
+
+
+
+Fina nekteba hik lal module.exports
+
+
+app.js
+--------
+const logger = require("./logger");
+logger.log("message");
+
+
+
+logger.js
+---------
+var url = "http://mylogger.io/log";
+
+function log(message) {
+  console.log(message);
+}
+
+exports.log = log;
+
+
+
+============================================================================
+
+3 methods to exports function
+
+ module.exports = log;
+
+module.exports.log = log;
+
+exports.log = log;
+
+
+the import syntax will be affected and changed depending on the export syntax;
+
+
+==============================================================
+
+exports         hye reference la          module.exports
+
+
+ module.exports = log;
+
+or
+    
+ module.exports.log = log;
+ 
+ ===================================================
+
+               Path Module
+
+bel nesbe lal parameter taba3 require
+el node js byeje w bishuf jaweta
+iza ken shi men el built in module
+bya3melo import iza la2 ..bisir bye5do ka
+path...w bisir ybarem 3le bel file
+
+//built in module
+const path = require("path");
+
+var pathObj = path.parse(__filename);
+
+console.log(pathObj);
+{
+  root: 'C:\\',
+  dir: 'C:\\Users\\10User\\Documents\\Online-shop',
+  base: 'app2.js',
+  ext: '.js',
+  name: 'app2'
+}
+
+
+
+
+app.js
+
+
+console.log(__filename);
+console.log(__dirname);
+var url = "http://mylogger.io/log";
+
+function log(message) {
+  console.log(message);
+}
+
+module.exports = log;
+
+
+
+
+-------------------------------------
+
+                    OS Module
+const os = require("os");
+
+var totalMemory = os.totalmem();
+var freeMemory = os.freemem();
+
+console.log("Total Memory " + totalMemory);
+console.log("free Memory " + freeMemory);
+
+
+====================================================
+
+file system module
+always prefer to use async method
+
+
+const fs = require("fs");
+ const files = fs.readdirSync("./");
+ console.log(files);
+// [ '.git', 'app.js', 'logger.js', 'node.txt' ]
+
+//kell el async take a callback function
+const m = fs.readdir("./", (err, files) => {
+  if (err) console.log("Error", err);
+  else console.log("Result", files);
+});
+
+
+---------------------------------------------
+
+Event nodejs
+
+//    class
+
+const EventEmitter = require("events");
+
+// instance or object
+
+const emitter = new EventEmitter();
+//emit : produce something  / Making a noise
+
+//Register a listener
+// on bta3mul addListener
+
+emitter.on("messageLogged", () => {
+  console.log("Listener called");
+});
+
+//Raising an event here.
+emitter.emit("messageLogged");
+
+--------------------------------------------------------
+
+//    class
+const EventEmitter = require("events");
+// instance or object
+const emitter = new EventEmitter();
+//emit : produce something  / Making a noise
+
+//Register a listener
+// on bta3mul addListener
+emitter.on("messageLogged", (arg) => {
+  // e, eventArg
+  console.log("Listener called", arg);
+});
+
+//with this technique..we have pass data about the event that just happened
+//Raising an event here.            event argument
+emitter.emit("messageLogged", { id: 1, url: "http://" });
+
+
+---------------------------------------------------
+
+
+
+
+
+
+==============================================================
+
+
+Events Arguments
+
+when we wanna rasise an event..we also wanna send some data
+about that event.
+
+
+
+event  Emitter
+
+
+
+logger.js
+
+
+const EventEmitter = require("events");
+
+//Extending Event Emitter
+class Logger extends EventEmitter {
+  log(message) {
+    // Send a HTTP request
+    console.log(message);
+
+    // Raise an event
+    this.emit("messageLogged", { id: 1, url: "http://" });
+  }
+}
+
+module.exports = Logger;
+//
+
+
+
+
+app.js
+
+
+
+
+const Logger = require("./logger");
+const logger = new Logger();
+
+logger.on("messageLogged", (arg) => {
+  console.log("Listener called", arg);
+});
+
+logger.log("message");
+
+
+
+===================================================================
+
+                         HTTP Module
+
+
+
+
+
+
+                   addiman jeddan
+
+const http = require("http");
+//for this we can create a web server
+//this server is an event emitter
+const server = http.createServer();
+
+//handler
+server.on("connection", (socket) => {
+  console.log("New Connection...");
+});
+
+//listening
+server.listen(3000);
+
+console.log("Listening on port 3000...");
+
+
+                     
+
+
+                     el afdalllllllllllll
+         high LEVELLLLLLLLLLLLLLLLL
+
+
+
+const http = require("http");
+//for this we can create a web server
+//this server is an event emitter
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.write("Hello world");
+    res.end();
+  }
+  if (req.url === "/api/courses") {
+    res.write(JSON.stringify([1, 2, 3]));
+    res.end();
+  }
+});
+
+//handler
+// server.on("connection", (socket) => {
+//   console.log("New Connection...");
+// });
+
+//listening
+server.listen(3000);
+
+console.log("Listening on port 3000...");
+------------------------------------------------------------
+
+
+const http = require("http");
+//we can create a web server
+//this server is an event emitter // create server
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.write("Hello world");
+    res.end();
+  }
+  if (req.url === "/api/courses") {
+    res.write(JSON.stringify([1, 2, 3]));
+    res.end();
+  }
+});
+
+//handler
+// server.on("connection", (socket) => {
+//   console.log("New Connection...");
+// });
+
+/*
+raising event
+This function is asynchronous. When the server starts listening,
+ the 'listening' event will be emitted. The last parameter 
+ callbackwill
+ be added as a listener for the 'listening' event.
+ */
+
+server.listen(3000);
+
+console.log("Listening on port 3000...");
+
+
+
+
+--------------------------------------------------
+
+
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.write("Hello world");
+    res.end();
+  }
+  if (req.url === "/api/courses") {
+    res.write(JSON.stringify([1, 2, 3]));
+    res.end();
+  }
+});
+
+server.listen(3000);
+
+console.log("Listening on port 3000...");
+---------------------------
+
+
+
+lessa fi tari2et el express
+li hye simpler w arjallllllllllllllllllllll
+
+
+==================================================
+
+  
+
+
+
+
+
+ Section 3
+
+ NPM
+
+before u need to add a package to ur app u need to create
+a file named package.json
+
+package.json : is a json file that includes some basic info about ur app
+or project
+name,version, depende.....
+
+-to create a package.json file we run 
+                  npm init
+
+and it will ask u a bunch of question
+version
+description
+entry point
+....
+....
+
+
+
+to open a package.json file in terminal
+
+   write cat package.json
+
+--------------------------------
+
+or there is a faster way to create a package.json file
+
+npm init --yes
+
+
+==========================================
+
+npm install underscore
+
+ or
+ 
+npm i underscore
+
+=============================================
+
+
+
+how the require function works ?
+bthuf iza hye bel core module..iza la2 betbarem 3laya bel file
+aw folder..iza la22 btshuf iza hye bel node node_modules
+
+
+// var _ = require("./underscore"); //underscore.js or underscore/index.js
+//1- Core module
+//  or
+//2- File or folder
+// or
+//3- node_modules Folder
+
+var _ = require("underscore");
+var result = _.contains([1, 2, 3], 2);
+console.log(result);
+----------------------------------------------------
+
+nehna bas nerfa3 el repo 3a git el node_modules folder
+ma bya3mul upload ma3on akid... bas byenzal bel dependecies
+ano enta kezem tnazlon.............
+w aslan el node_modules bikun wazna do5em ktir yaane 200mb aw 300
+fa ma byenfa3 terfa3a 3a github aw ano teb3ata la hada copy
+aw 3a email...
+kif ?
+
+
+
+
+
+
+
+byekfe ta3mul npm install aw npm i
+w kelshi byemshe halo
+
+
+
+
+-----------------------------------------------------
+
+
+      ib3ad : ignore
+
+Exclude the node modules folder using git
+
+setp1:
+
+git init
+git status
+
+step2:
+ 
+ create a file in the root named
+   .gitignore
+
+ list all the file and folder that should be excluded
+from our git repositry  
+
+yaane mnshuf shu badna folder aw file men el maktubin bi 
+el status w mnektob li badna yeh menon
+
+ex:  /node_modules
+mnekteba 3ade bel .gitignore
+
+w men baada 
+git add * 
+git m "..."
+git push
+
+
+====================================================
+
+
+video 30
+semantic versioning   SemVer
+            Caret
+we have 3 numbers or 3 components
+
+"mongoose": "^6.7.2", //Major.Minor.Patch
+
+patch: fix bug aw tas7i7
+Minor: adding new features that dont break the existing api
+Major 5.0.0
+                         
+                         ^4.13.6
+
+patch :we increase the patch verison when we fix a bug  + 1
+       4.13.7
+
+
+
+
+Minor: adding new features that dont break the existing api
+4.14.0
+li2an baad mafi bug...unstable
+
+
+
+Major: adding new features that break the existing api
+5.0.0
+
+
+^ carat : yaane aya version btebda bi 4
+aw fina nekteba bal el carar character bi hayda el shakel
+4.x
+
+
+~ Tilde      ~4.13.6
+aya wahde awala 4.13
+aw tari2a tenye la kitebta hye 4.13.x
+
+
+
+
+iza habayna nhet the exact same version
+mnhet el semantic verison metel ma huwe
+bel zabet bidun carat aw tilde.
+
+                  semantic versioning
+--------------------------------------------------------
+
+to see all the install dependecies and the exact verison
+
+
+            npm list
+
+
+or
+
+
+            npm list --depth=0
+
+
+-------------------------------------------------------
+
+
+                 Viewing Registry  
+                  
+faster way to finds all the meta data to that library
+
+npm view mongoose                
+
+
+
+
+dependencies:
+  npm view mongoose dependencies
+
+
+verisons:
+  npm view mongoose versions
+
+
+====================================================
+
+
+
+
+
+
+installing a specific version of package
+
+npm i mongoose@2.4.2
+
+-------------------------------------------------
+
+example:
+
+underscore 1.4.0
+ npm i underscore@1.4.0
+
+
+
+npm list
+=========================================
+
+
+v34    updating Local Packages
+
+
+lasthuf el current version wel wanted wel latest.
+AW BEL A7RA IZA EL VERISON mesh updated
+bi raje3lak shi,,ger hik ymkn ma yerja3lak shi.
+
+npm outdated
+
+
+
+to update the version we run
+
+npm update
+this only works for update minor and patch releases.
+
+
+
+if u want to update to this exact lastest version
+
+
+
+             npm i -g npm-check-updates
+
+
+or
+
+           
+npm-check-updates
+
+or
+
+               ncu
+
+
+               or
+
+
+               ncu -u
+
+
+after that we run npm install the dependency
+
+npm i
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+
+video 35
+
+                    DevDependencies
+
+
+to specify that is a developement dependency
+and should not go into productional environment
+bas badna yeh during development.
+
+static analysis:
+
+npm i jshint --save-dev
+
+he btshuf el syntactical error
+
+
+-----------------------------------------------------------
+
+
+
+video 36
+
+
+                      uninstall package
+
+how ?
+  
+
+npm uninstall mongoose
+       
+
+       or
+
+npm un mongoose
+
+
+
+
+-----------------------------------------------------
+
+
+video 37
+
+working with  global Packages
+
+
+to upgrade to the latest version
+            npm i -g npm
+
+
+
+            npm -g outdated
+
+
+ npm un -g mongoose
+
+==============================================================================
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+
+
+v 38
+
+  Publishing a Package
+
+create ur own node package and publish them in the website
+
+
+create a folder 
+
+mkdir lion-lib
+cd lion-lib/
+npm init --yes
+code .
+add index.js file
+
+-----
+         index.js
+
+module.exports.add = (a, b) => {
+  return a + b;
+};
+
+-------
+
+
+
+back to terminal
+
+create an account on npm.com
+
+
+//     if u dont have an account
+
+npm adduser
+
+//if u have an account you can run 
+  npm login
+
+
+  finally
+
+           npm publish
+
+
+
+
+
+
+
+
+
+
+ now how to run ??
+
+
+ create a new folder 
+ fut 3le
+ npm init --yes
+
+npm i omarsaadepack  
+
+create app.js file jawa el folder el root
+yaane 7ad el node_modules w het jaweto
+
+
+
+app.js
+
+var lion = require("omarsaadepack");
+var result = lion.add(1, 2);
+console.log(result);
+
+
+
+w lah tshuf el result.
+3
+
+
+======================================================
+
+Updating a Published Package
+
+
+bel index.js
+ sar fi update w hala2 badna na3melo update
+
+
+ index.js
+
+ //entry point to our package
+module.exports.add = (a, b) => {
+  return a + b;
+};
+
+module.exports.multiply = (a, b) => {
+  return a * b;
+};
+
+
+
+
+
+
+hala2 nehna ma gayran bel aseyse..
+yaane mena major feature
+wala zabatna bug..yaane mena bug fix
+bas mena feature asesye wala 3adalna 3al asesye
+li betgayer el api
+dallet el function el awle bel dabet metel ma hye abel.
+
+hala2 kif bi sir el update?
+
+ya manually by hand lal package.json aw
+
+using npm
+
+npm version major
+or
+npm version minor
+or
+npm version patch
+
+nehna 3am na3mul lal minor
+
+
+             npm version minor
+
+
+and 
+
+   npm publish
+
+==========================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
